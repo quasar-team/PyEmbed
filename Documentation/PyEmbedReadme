@@ -1,0 +1,34 @@
+PyEmbed readme
+
+The python environment has to be initialized / finalized at the beggining and end of the program.
+Therefore, the chosen pattern of designing the class was singleton.
+
+Call
+PyEmbed::getInstance() - to initialize the python environment
+PyEmbed::destroyInstance() - finalizes the python environment
+
+loadScript(path) - loads a script from a given path
+loadScript(path, fname, expectedArgCount, type, name) - loads a script function from a given path
+	- handles errors and throws a message containing details about the script, its type and name (use place)
+getFunction(name) - returns a python object of the desired python function
+python::object obj - the returned function can be called as obj(args) and its returned value
+	can be extracted using the python::extract<type>(obj(args)) function
+
+PyGilGuard - acquires the python GIL during its existence 
+	- can be used when calling python-related code from the C++ side
+PyThreadGuard - releases the python GIL during its existence (saves thread's state)
+	- can be used when calling C++ code from the embedded python side
+
+An interface class / module is added using pure boost python techniques
+
+example:
+declaring
+BOOST_PYTHON_MODULE(class)
+{
+	class_<ExternalMonitor, boost::shared_ptr<ExternalMonitor> >("ExternalMonitor")
+	.def("funcName", &Class::method)
+	.add_property("value", &Class::getValue);
+}
+
+and calling initclass() once in the code
+
