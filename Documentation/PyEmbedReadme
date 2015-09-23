@@ -1,5 +1,15 @@
 PyEmbed readme
 
+The module needs a header called LogItComponentIDs.h in which there should be a namespace
+LogItComponentID which should contain an enum with the PyEmbed module id.
+e.g.:
+
+namespace LogItComponentID {
+enum licompids {
+    PyEmbed = 0
+}
+}
+
 The python environment has to be initialized / finalized at the beggining and end of the program.
 Therefore, the chosen pattern of designing the class was singleton.
 
@@ -31,4 +41,5 @@ BOOST_PYTHON_MODULE(class)
 }
 
 and calling initclass() once in the code
+
 

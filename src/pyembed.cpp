@@ -8,6 +8,7 @@
 #include <pyembed.h>
 
 #include <LogIt.h>
+#include <LogItComponentIDs.h>
 #include <iostream>
 #include <sstream>
 
@@ -110,13 +111,13 @@ string PyEmbed::logError()
 {
 	string err = getError();
 	if (!err.empty())
-		LOG(Log::ERR, 0) << err;
+		LOG(Log::ERR, LogItComponentID::PyEmbed) << err;
 	return err;
 }
 
 void PyEmbed::logError(const string& err)
 {
-	LOG(Log::ERR, 0) << err;
+	LOG(Log::ERR, LogItComponentID::PyEmbed) << err;
 }
 
 string PyEmbed::getError()
