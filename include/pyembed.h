@@ -2,7 +2,8 @@
  * pyembed.h
  *
  * Created on: September, 2015
- * Author: csoare
+ * Author: Cristian-Valeriu Soare
+ * E-mail: soare.cristian21@gmail.com
  */
 
 #ifndef PYEMBED_H
@@ -28,8 +29,8 @@ public:
 	void loadScript(const std::string& path);
 	/**
 	 * Constructs error message
-	 * @param type usage type of the script
-	 * @param type name or place of usage of the script
+	 * @param type usage type of the script (used only for error description)
+	 * @param name name or place of usage of the script (used only for error description)
 	 * @param path path of the script
 	 * @param fname name of the loaded python function
 	 * @param argCount number of expected arguments of the loaded function (not checking if -1)
@@ -75,7 +76,7 @@ private:
 	~PyEmbed();
 
 	/**
-	 * Constructs error message
+	 * Constructs error message (internal usage only)
 	 * @param type usage type of the script
 	 * @param type name name or place of usage of the script
 	 * @param path path of the script
@@ -103,6 +104,9 @@ public:
 	PyGilGuard();
 	~PyGilGuard();
 
+	PyGilGuard(const PyGilGuard&) = delete;
+	PyGilGuard& operator=(const PyGilGuard&) = delete;
+
 	/**
 	 * Manually unlocks the guard
 	 */
@@ -118,6 +122,9 @@ class PyThreadGuard
 public:
 	PyThreadGuard();
 	~PyThreadGuard();
+
+	PyThreadGuard(const PyThreadGuard&) = delete;
+	PyThreadGuard& operator=(const PyThreadGuard&) = delete;
 
 
 	/**

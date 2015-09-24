@@ -1,8 +1,9 @@
 /*
- * pyembed.cpp
+ * pyembed.h
  *
  * Created on: September, 2015
- * Author: csoare
+ * Author: Cristian-Valeriu Soare
+ * E-mail: soare.cristian21@gmail.com
  */
 
 #include <pyembed.h>
@@ -61,6 +62,7 @@ void PyEmbed::loadScript(const string& path)
 	py::list keys = d.keys();
 	py::list values = d.values();
 
+	// check if the function name (key) has been already loaded, but its pointer has changed
 	for (unsigned int i = 0; i < py::len(keys); i++) {
 		string key(py::extract<const char*>(keys[i]));
 		if (m_functions.find(key) != m_functions.end() && m_functions[key].ptr() != static_cast<py::object>(values[i]).ptr())
@@ -161,10 +163,8 @@ std::string PyEmbed::getInitMsg(
 }
 
 PyGilGuard::PyGilGuard()
-{
-	m_state = PyGILState_Ensure();
-	m_locked = true;
-}
+	: m_state(PyGILState_Ensure())
+	, m_locked(true) {}
 
 PyGilGuard::~PyGilGuard()
 {
@@ -180,9 +180,7 @@ void PyGilGuard::unlock()
 }
 
 PyThreadGuard::PyThreadGuard()
-{
-	m_state = PyEval_SaveThread();
-}
+	: m_state(PyEval_SaveThread()) {}
 
 PyThreadGuard::~PyThreadGuard()
 {

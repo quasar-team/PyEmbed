@@ -1,4 +1,15 @@
+/*
+ * pyembed.h
+ *
+ * Created on: September, 2015
+ * Author: Cristian-Valeriu Soare
+ * E-mail: soare.cristian21@gmail.com
+ */
+
 PyEmbed readme
+
+This module was created while working on the OPCUA IPbus server.
+It can be reused for other IPbus servers.
 
 The module needs a header called LogItComponentIDs.h in which there should be a namespace
 LogItComponentID which should contain an enum with the PyEmbed module id.
@@ -33,13 +44,13 @@ An interface class / module is added using pure boost python techniques
 
 example:
 declaring
-BOOST_PYTHON_MODULE(class)
+BOOST_PYTHON_MODULE(className)
 {
 	class_<ExternalMonitor, boost::shared_ptr<ExternalMonitor> >("ExternalMonitor")
 	.def("funcName", &Class::method)
 	.add_property("value", &Class::getValue);
 }
 
-and calling initclass() once in the code
+and calling initclassName() once in the code
 
 
